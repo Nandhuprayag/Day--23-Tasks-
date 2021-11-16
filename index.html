@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #demo{
+            width: 700px;
+            height: 4000px;
+            border: 3px solid #cddc39;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div id="demo"></div>
+    
+    <script>
+        
+        async function getData()
+        {
+            try {
+                 var data=await fetch("https://restcountries.com/v3.1/all")
+                 var mydata=await data.json();
+                console.log(mydata);
+
+                for(var i=0;i<mydata.length;i++)
+                {
+                    var myDiv=document.createElement("div")
+                    myDiv.style.backgroundColor="grey";
+                    myDiv.style.textAlign="center";
+                    myDiv.style.width="30%";
+                    myDiv.style.border="3px solid green";
+                    myDiv.innerText=mydata[i].name.common;
+
+
+                    var flag=document.createElement("img");
+                    flag.setAttribute("src",mydata[i].flags.png);
+                    flag.setAttribute("width","100px");
+
+                    var button=document.createElement("button")
+                    button.innerText="Get Weather";
+                    button.style.textDecorationColor="blue";
+                    button.addEventListener('click',function()
+                    {
+                        const APIkey='e3eaaa5b0fa233a7d22c760f550e2e1f';
+                        fetch("https://api.openweathermap.org/data/2.5/weather?q="+ 'chennai' + '&appid=' + APIkey)
+                        .then(function(data2)
+                        {
+                            return data2.json()
+                        })
+                        .then(function(dataclimate)
+                        {
+                            console.log(dataclimate);
+                            // alert('hi');
+                            alert('Current Climate :' + dataclimate.weather )
+                        }).catch(function(error)
+                        {
+                            console.log(error);
+                        })
+                        
+
+                    })
+                    
+
+
+
+                    myDiv.appendChild(button);
+                    myDiv.appendChild(flag);
+
+                    document.getElementById("demo").appendChild(myDiv);
+
+                }
+               
+
+
+
+
+
+
+
+
+
+
+            } catch (error) {
+               (console.error());
+            }
+        }
+      getData()
+
+
+
+            
+       
+
+
+
+
+
+    </script>
+</body>
+</html>
+
+<!-- 
+async function getData()
+{
+    try {
+        var box=await fetch("https://restcountries.com/v3.1/all") 
+        var data=await box.json();
+        console.log(data)
+        for(var i=0;i<data.length;i++)
+        {
+            var card=document.createElement("div");
+            
+            card.style.textAlign="center";
+            card.style.width="32%"
+            card.style.border="2px solid grey"
+
+            card.innerText=data[i].name.common;
+            
+            var flag=document.createElement("img");
+            flag.setAttribute("src",data[i].flags.png);
+            flag.setAttribute("width","100px")
+
+            var button=document.createElement("button");
+            button.innerText="Get Weather";
+            
+
+            card.appendChild(button);
+            card.appendChild(flag);
+
+            document.getElementById("demo").appendChild(card);
+
+
+        }
+
+
+
+
+
+
+    } catch (error) {
+        
+    }
+}
+
+getData(); -->
